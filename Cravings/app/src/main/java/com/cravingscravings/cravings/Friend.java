@@ -1,9 +1,8 @@
 package com.cravingscravings.cravings;
 
-import java.sql.Timestamp;
-
 /**
  * Created by Wilbert Lam on 8/27/2015.
+ * Getters and Setters for each individual Friend listed on the main news feed.
  */
 public class Friend {
 
@@ -79,6 +78,5 @@ public class Friend {
     public void setFav3(String fav3) {
         this.fav3 = fav3;
     }
-
 
 }

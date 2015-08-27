@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -35,18 +34,6 @@ public class MainActivity extends AppCompatActivity {
         ((ImageView) findViewById((R.id.main_userpicture))).setImageResource(R.drawable.wilbo);
 
         // Create list view and populate it with data
-//        ArrayList<String> people = new ArrayList<String>();
-//        people.add("David,Pizza,9 hours");
-//        people.add("Jane,Thai,1 hour");
-//        people.add("Wilburt,Indian,52 minutes");
-//        people.add("Jody,Mexican,4 days");
-//        people.add("Frodo,Lembas Bread,10 hours");
-//        people.add("Luke Skywalker,Sushi,1 minute");
-//        people.add("Batman,Bat Food,8 days");
-//        people.add("Rylee,People,14 minutes");
-
-
-
         if (isOnline()) {
             requestFeedData("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo");
         } else {
@@ -54,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // generates the list of friends on the feed
+    // Generates the list of friends on the feed
     private void generateFeed(List<Friend> feedList) {
         ProfileListItemAdapter peopleAdapter = new ProfileListItemAdapter(this, feedList);
         ListView peopleProfileList = (ListView) findViewById(R.id.main_peopleprofile_list);
@@ -75,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -83,44 +70,44 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // gets the data from Feed task
+    // Gets the data from Feed task
     private void requestFeedData(String uri) {
         FeedTask task = new FeedTask();
         task.execute(uri);
     }
 
-    // checks to see if network is connected
+    // Checks to see if network is connected
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return (netInfo != null && netInfo.isConnectedOrConnecting());
     }
 
+    // *******SENDS TEXT TO LOG**********
     private void displayText(String text) {
-        //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         Log.d("tag", text);
     }
 
-    // implement AsyncTask to have thread in background to get user
+    // Implement AsyncTask to have thread in background to get user
     // feed network from REST endpoint
     private class FeedTask extends AsyncTask<String, String, String> {
 
         @Override
-        // before the AsyncTask is called
+        // Before the AsyncTask is called, contains log info
         protected void onPreExecute() {
             displayText("PRE-Executing");
-
-
         }
 
         @Override
-        // get data on this thread
+        // Get JSON data on this thread
         protected String doInBackground(String... params) {
             String content = HttpManager.getData(params[0]);
             return content;
         }
 
         @Override
+        // After the AsyncTask is called, moves feed data to UI thread.
+        // Also includes log info
         protected void onPostExecute(String result) {
             displayText("POST-Executing - " + result);
 

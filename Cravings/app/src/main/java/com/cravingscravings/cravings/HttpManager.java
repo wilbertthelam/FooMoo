@@ -10,6 +10,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Wilbert Lam on 8/26/2015.
+ * Connects to the network database and pulls records given a REST URL.
  */
 public class HttpManager {
 

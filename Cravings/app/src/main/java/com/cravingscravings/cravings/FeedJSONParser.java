@@ -15,10 +15,12 @@ import java.util.List;
 
 /**
  * Created by Wilbert Lam on 8/27/2015.
+ * Parses the JSON file into a List of type Friend to be accessed by the UI.
  */
 public class FeedJSONParser {
 
-    // parse the Feed JSON object for Feed info
+    // parse the Feed JSON object for Feed info, returns list of Friend objects
+    // usable by the main UI.
     public static List<Friend> parseFeed(String content) {
 
         try {
@@ -31,7 +33,7 @@ public class FeedJSONParser {
                 JSONObject obj = ar.getJSONObject(i);
                 Friend friend = new Friend();
 
-                // get fields out of JSON feed object
+                // Get fields out of JSON feed object
                 friend.setUserId(obj.getInt("user_id"));
                 friend.setFname(obj.getString("fname"));
                 friend.setLname(obj.getString("lname"));
@@ -40,6 +42,7 @@ public class FeedJSONParser {
                 friend.setFav2(obj.getString("fav_2"));
                 friend.setFav3(obj.getString("fav_3"));
 
+                // Get relative time to now
                 String craving_timestamp = obj.getString("craving_timestamp");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 Date date = null;
