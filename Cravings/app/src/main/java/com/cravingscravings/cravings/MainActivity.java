@@ -1,15 +1,22 @@
 package com.cravingscravings.cravings;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Class for main page
@@ -28,16 +35,28 @@ public class MainActivity extends AppCompatActivity {
         ((ImageView) findViewById((R.id.main_userpicture))).setImageResource(R.drawable.wilbo);
 
         // Create list view and populate it with data
-        ArrayList<String> people = new ArrayList<String>();
-        people.add("David,Pizza,9 hours");
-        people.add("Jane,Thai,1 hour");
-        people.add("Wilburt,Indian,52 minutes");
-        people.add("Jody,Mexican,4 days");
-        people.add("Frodo,Lembas Bread,10 hours");
-        people.add("Luke Skywalker,Sushi,1 minute");
-        people.add("Batman,Bat Food,8 days");
-        people.add("Rylee,People,14 minutes");
-        ProfileListItemAdapter peopleAdapter = new ProfileListItemAdapter(this, people);
+//        ArrayList<String> people = new ArrayList<String>();
+//        people.add("David,Pizza,9 hours");
+//        people.add("Jane,Thai,1 hour");
+//        people.add("Wilburt,Indian,52 minutes");
+//        people.add("Jody,Mexican,4 days");
+//        people.add("Frodo,Lembas Bread,10 hours");
+//        people.add("Luke Skywalker,Sushi,1 minute");
+//        people.add("Batman,Bat Food,8 days");
+//        people.add("Rylee,People,14 minutes");
+
+
+
+        if (isOnline()) {
+            requestFeedData("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo");
+        } else {
+            Toast.makeText(this, "Network isn't working!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // generates the list of friends on the feed
+    private void generateFeed(List<Friend> feedList) {
+        ProfileListItemAdapter peopleAdapter = new ProfileListItemAdapter(this, feedList);
         ListView peopleProfileList = (ListView) findViewById(R.id.main_peopleprofile_list);
         peopleProfileList.setAdapter(peopleAdapter);
     }
@@ -62,5 +81,51 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // gets the data from Feed task
+    private void requestFeedData(String uri) {
+        FeedTask task = new FeedTask();
+        task.execute(uri);
+    }
+
+    // checks to see if network is connected
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return (netInfo != null && netInfo.isConnectedOrConnecting());
+    }
+
+    private void displayText(String text) {
+        //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Log.d("tag", text);
+    }
+
+    // implement AsyncTask to have thread in background to get user
+    // feed network from REST endpoint
+    private class FeedTask extends AsyncTask<String, String, String> {
+
+        @Override
+        // before the AsyncTask is called
+        protected void onPreExecute() {
+            displayText("PRE-Executing");
+
+
+        }
+
+        @Override
+        // get data on this thread
+        protected String doInBackground(String... params) {
+            String content = HttpManager.getData(params[0]);
+            return content;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            displayText("POST-Executing - " + result);
+
+            List<Friend> friendList = FeedJSONParser.parseFeed(result);
+            generateFeed(friendList);
+        }
     }
 }

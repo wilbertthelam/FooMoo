@@ -1,6 +1,7 @@
 package com.cravingscravings.cravings;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Created by linse on 8/17/2015.
+ * Created by linsen peepee wu on 8/17/2015.
  * Adapter to display list of profile's on main page
  */
-public class ProfileListItemAdapter extends ArrayAdapter<String> {
-    ArrayList<String> people;
+public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
+    List<Friend> people;
 
     // View lookup cache for person's profile
     private static class ViewHolder {
@@ -26,15 +32,15 @@ public class ProfileListItemAdapter extends ArrayAdapter<String> {
     }
 
     // Constructor
-    public ProfileListItemAdapter(Context context, ArrayList<String> people) {
+    public ProfileListItemAdapter(Context context, List<Friend> people) {
         super(context, 0, people);
         this.people = people;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Data string for this position
-        String data = people.get(position);
+        // Data object for this position
+        Friend data = people.get(position);
 
         // Check if existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder;
@@ -51,15 +57,21 @@ public class ProfileListItemAdapter extends ArrayAdapter<String> {
         else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        // Populate the view with data from the data string
-        // Data formatted as name,food,time
-        String[] dataSplit = data.split(",");
-        if (dataSplit.length != 3) {
-            System.err.println("Profile list item data parsing error");
-        }
-        viewHolder.name.setText(dataSplit[0]);
-        viewHolder.food.setText(dataSplit[1]);
-        viewHolder.time.setText("(" + dataSplit[2] + " ago)");
+
+        // Populate the view with data from the Friend object
+        int userId = data.getUserId();
+        String fname = data.getFname();
+        String lname = data.getLname();
+        String currentCraving = data.getCurrentCraving();
+        String fav1 = data.getFav1();
+        String fav2 = data.getFav2();
+        String fav3 = data.getFav3();
+        String craving_timestamp = data.getCravingTimestamp();
+
+        // Sets view for each individual
+        viewHolder.name.setText(fname + " "  + lname + " (" + userId + ")");
+        viewHolder.food.setText(currentCraving);
+        viewHolder.time.setText("(" + craving_timestamp + ")");
 
         return convertView;
     }
