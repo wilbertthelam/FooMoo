@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Cravings</string>
+    <string name="app_name">FooMoo</string>
 
     <string name="action_settings">Settings</string>
-    <string name="login_title">Sign In</string>
-    <string name="login_buttonText">Log In</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="facebook_app_id">497829047061470</string>
 </resources>

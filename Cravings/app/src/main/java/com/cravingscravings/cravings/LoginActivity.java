@@ -1,12 +1,15 @@
 package com.cravingscravings.cravings;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.facebook.FacebookSdk;
 
 /*
  * Class for login page
@@ -16,7 +19,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext()); // Initialize Facebook SDK
         setContentView(R.layout.activity_login);
+
+        // Create view pager slides
+        int[] slides = {R.drawable.wilbo, R.drawable.wilbo, R.drawable.wilbo};
+        LoginPagerAdapter loginPageAdapter = new LoginPagerAdapter(this, slides);
+        ((ViewPager) findViewById(R.id.login_viewPager)).setAdapter(loginPageAdapter);
     }
 
     @Override
@@ -43,8 +52,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void sendLogIn(View v) {
         Intent loginIntent = new Intent(this, MainActivity.class);
-        EditText email = (EditText) findViewById(R.id.loginEmail);
-        loginIntent.putExtra("username", email.getText().toString());
         startActivity(loginIntent);
     }
 }
