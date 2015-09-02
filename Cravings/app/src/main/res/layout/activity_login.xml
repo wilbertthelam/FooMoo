@@ -20,6 +20,29 @@
         android:layout_height="0px"
         android:layout_weight="7"
         android:id="@+id/login_viewPager" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:id="@+id/login_radiogroup">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:id="@+id/login_radiobutton1" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:id="@+id/login_radiobutton2" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:id="@+id/login_radiobutton3" />
+    </RadioGroup>
     
     <com.facebook.login.widget.LoginButton
         android:layout_width="wrap_content"

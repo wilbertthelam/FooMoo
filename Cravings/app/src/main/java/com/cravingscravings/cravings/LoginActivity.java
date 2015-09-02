@@ -1,13 +1,11 @@
 package com.cravingscravings.cravings;
 
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.facebook.FacebookSdk;
 
@@ -23,9 +21,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Create view pager slides
-        int[] slides = {R.drawable.wilbo, R.drawable.wilbo, R.drawable.wilbo};
+        int[] slides = {R.drawable.loginslide1, R.drawable.loginslide2, R.drawable.loginslide3};
         LoginPagerAdapter loginPageAdapter = new LoginPagerAdapter(this, slides);
-        ((ViewPager) findViewById(R.id.login_viewPager)).setAdapter(loginPageAdapter);
+        ViewPager loginViewPager = (ViewPager) findViewById(R.id.login_viewPager);
+        loginViewPager.setAdapter(loginPageAdapter);
+        setupLoginViewPagerIndicator();
     }
 
     @Override
@@ -50,8 +50,32 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendLogIn(View v) {
-        Intent loginIntent = new Intent(this, MainActivity.class);
-        startActivity(loginIntent);
+    // Sets up radio buttons that indicate current page in View Pager
+    private void setupLoginViewPagerIndicator() {
+        ViewPager loginViewPager = (ViewPager) findViewById(R.id.login_viewPager);
+        loginViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                RadioGroup loginRadioGroup = (RadioGroup) findViewById(R.id.login_radiogroup);
+                switch (position) {
+                    case 0:
+                        loginRadioGroup.check(R.id.login_radiobutton1);
+                        break;
+                    case 1:
+                        loginRadioGroup.check(R.id.login_radiobutton2);
+                        break;
+                    case 2:
+                        loginRadioGroup.check(R.id.login_radiobutton3);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels ){}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 }
