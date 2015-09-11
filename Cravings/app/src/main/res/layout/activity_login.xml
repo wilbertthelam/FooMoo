@@ -43,13 +43,11 @@
             android:checked="false"
             android:id="@+id/login_radiobutton3" />
     </RadioGroup>
-    
-    <com.facebook.login.widget.LoginButton
+
+    <fragment android:name="com.cravingscravings.cravings.LoginFacebookFragment"
         android:layout_width="wrap_content"
         android:layout_height="0px"
-        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:layout_gravity="center"/>
-
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

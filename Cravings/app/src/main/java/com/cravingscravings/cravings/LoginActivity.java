@@ -3,11 +3,17 @@ package com.cravingscravings.cravings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 /*
  * Class for login page
@@ -17,15 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext()); // Initialize Facebook SDK
         setContentView(R.layout.activity_login);
-
-        // Create view pager slides
-        int[] slides = {R.drawable.loginslide1, R.drawable.loginslide2, R.drawable.loginslide3};
-        LoginPagerAdapter loginPageAdapter = new LoginPagerAdapter(this, slides);
-        ViewPager loginViewPager = (ViewPager) findViewById(R.id.login_viewPager);
-        loginViewPager.setAdapter(loginPageAdapter);
-        setupLoginViewPagerIndicator();
+        setupLoginViewPagerIndicator(); // Create view pager slides
     }
 
     @Override
@@ -52,7 +51,10 @@ public class LoginActivity extends AppCompatActivity {
 
     // Sets up radio buttons that indicate current page in View Pager
     private void setupLoginViewPagerIndicator() {
+        int[] slides = {R.drawable.loginslide1, R.drawable.loginslide2, R.drawable.loginslide3};
+        LoginPagerAdapter loginPageAdapter = new LoginPagerAdapter(this, slides);
         ViewPager loginViewPager = (ViewPager) findViewById(R.id.login_viewPager);
+        loginViewPager.setAdapter(loginPageAdapter);
         loginViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
