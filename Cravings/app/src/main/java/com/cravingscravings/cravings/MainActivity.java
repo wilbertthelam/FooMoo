@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -102,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
+    }
+
+    // Open up new activity to search activity
+    public void searchCraving(View v) {
+        Intent i = new Intent(MainActivity.this, SearchCravingActivity.class);
+        i.putExtra("CurrentCraving", R.string.craving);
+        startActivity(i);
     }
 
     // Generates the list of friends on the feed
