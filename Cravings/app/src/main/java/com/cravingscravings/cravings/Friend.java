@@ -6,7 +6,7 @@ package com.cravingscravings.cravings;
  */
 public class Friend {
 
-    private int userId;
+    private String userId;
     private String fname;
     private String lname;
     private String currentCraving;
@@ -23,11 +23,11 @@ public class Friend {
         this.cravingTimestamp = cravingTimestamp;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

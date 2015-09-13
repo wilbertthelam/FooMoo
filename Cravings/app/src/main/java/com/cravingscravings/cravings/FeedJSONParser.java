@@ -34,7 +34,7 @@ public class FeedJSONParser {
                 Friend friend = new Friend();
 
                 // Get fields out of JSON feed object
-                friend.setUserId(obj.getInt("user_id"));
+                friend.setUserId(obj.getString("user_id"));
                 friend.setFname(obj.getString("fname"));
                 friend.setLname(obj.getString("lname"));
                 friend.setCurrentCraving(obj.getString("current_craving"));

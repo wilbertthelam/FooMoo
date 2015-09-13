@@ -8,13 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Created by linse on 9/3/2015.
@@ -22,23 +29,36 @@ import com.facebook.login.widget.LoginButton;
  */
 public class LoginFacebookFragment extends Fragment {
 
-    private CallbackManager callbackManager;
+    private CallbackManager mCallbackManager;
     private FacebookCallback<LoginResult> callBack;
+    private ProfileTracker mProfileTracker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
+        mCallbackManager = CallbackManager.Factory.create();
+
+        // Logs user in when profile changes (Logs in or logged in)
+        mProfileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                // Make sure that user is logging in and not logging out
+                if (profile == null && profile2 != null) {
+                    mProfileTracker.stopTracking();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    getActivity().finish();
+                    startActivity(intent);
+                }
+            }
+        };
+        mProfileTracker.startTracking();
 
         // Handles result of attempted Facebook login
         callBack = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                Profile curProfile = Profile.getCurrentProfile();
-                startActivity(intent);
-
+                Log.d("blarg", "Logged In");
             }
 
             @Override
@@ -62,14 +82,14 @@ public class LoginFacebookFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends"); // Asks user for permission to see friends
+        loginButton.setReadPermissions("user_friends");
         loginButton.setFragment(this);
-        loginButton.registerCallback(callbackManager, callBack);
+        loginButton.registerCallback(mCallbackManager, callBack);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

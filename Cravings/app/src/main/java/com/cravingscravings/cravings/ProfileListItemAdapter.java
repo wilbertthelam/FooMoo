@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.login.widget.ProfilePictureView;
+
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
 
     // View lookup cache for person's profile
     private static class ViewHolder {
-        ImageView picture;
+        ProfilePictureView picture;
         TextView name;
         TextView food;
         TextView time;
@@ -42,7 +45,7 @@ public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.main_profilelistitem_view, parent, false);
-            viewHolder.picture = (ImageView) convertView.findViewById(R.id.main_profilelistitem_img);
+            viewHolder.picture = (ProfilePictureView) convertView.findViewById(R.id.main_profilelistitem_img);
             viewHolder.name = (TextView) convertView.findViewById(R.id.main_profilelistitem_name);
             viewHolder.food = (TextView) convertView.findViewById(R.id.main_profilelistitem_craving);
             viewHolder.time = (TextView) convertView.findViewById(R.id.main_profilelistitem_time);
@@ -53,7 +56,7 @@ public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
         }
 
         // Populate the view with data from the Friend object
-        int userId = data.getUserId();
+        String userId = data.getUserId();
         String fname = data.getFname();
         String lname = data.getLname();
         String currentCraving = data.getCurrentCraving();
@@ -63,6 +66,7 @@ public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
         String craving_timestamp = data.getCravingTimestamp();
 
         // Sets view for each individual
+        viewHolder.picture.setProfileId(userId);
         viewHolder.name.setText(fname + " "  + lname + " (" + userId + ")");
         viewHolder.food.setText(currentCraving);
         viewHolder.time.setText("(" + craving_timestamp + ")");

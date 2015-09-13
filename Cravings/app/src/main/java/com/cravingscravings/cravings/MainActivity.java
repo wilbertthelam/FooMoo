@@ -15,29 +15,92 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.widget.ProfilePictureView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Class for main page
  */
 public class MainActivity extends AppCompatActivity {
 
+    Set<String> permissions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Take data from login page fill main page
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        ((TextView) findViewById(R.id.main_username)).setText(username);
-        ((ImageView) findViewById((R.id.main_userpicture))).setImageResource(R.drawable.wilbo);
+        // Setup Main Page using data taken from Facebook
+        // Use profile setup from login page
+        Profile profile = Profile.getCurrentProfile();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (profile != null) {
+            ((TextView) findViewById(R.id.main_username)).setText(profile.getName());
+            ((ProfilePictureView) findViewById((R.id.main_userpicture))).setProfileId(profile.getId());
 
-        // Create list view and populate it with data
-        if (isOnline()) {
-            requestFeedData("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo");
-        } else {
-            Toast.makeText(this, "Network isn't working!", Toast.LENGTH_LONG).show();
+            // Send request for user's friends list
+            // First check if have user_friends permission
+            permissions = accessToken.getPermissions();
+            if (!permissions.contains("user_friends")) {
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_friends"));
+            }
+            GraphRequest request = GraphRequest.newMyFriendsRequest(
+                    accessToken,
+                    new GraphRequest.GraphJSONArrayCallback() {
+                        @Override
+                        public void onCompleted(JSONArray result, GraphResponse graphResponse) {
+                            // When request completes, if has results use to populate feed
+                            if (result == null) {
+                                Log.d("asdf", "null");
+                            }
+                            else {
+                                try {
+                                    List<Friend> friends = new ArrayList<Friend>();
+                                    for (int i = 0; i < result.length(); i++) {
+                                        Friend friend = new Friend();
+                                        JSONObject obj = result.getJSONObject(i);
+                                        friend.setUserId(obj.getString("id"));
+                                        String[] name = obj.getString("name").split(" ");
+                                        friend.setFname(name[0]);
+                                        friend.setLname(name[1]);
+                                        friends.add(friend);
+                                    }
+                                    generateFeed(friends);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+            );
+            request.executeAsync();
+
+            /*
+            // Create list view and populate it with data
+            if (isOnline()) {
+                requestFeedData("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo");
+            } else {
+                Toast.makeText(this, "Network isn't working!", Toast.LENGTH_LONG).show();
+            } */
+        }
+        // If cannot get current profile, return to login page
+        else {
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
