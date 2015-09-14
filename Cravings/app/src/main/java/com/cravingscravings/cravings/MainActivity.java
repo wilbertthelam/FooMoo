@@ -38,6 +38,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     Set<String> permissions;
+    String currentUserID; // Storage of logged in user's ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         // Use profile setup from login page
         Profile profile = Profile.getCurrentProfile();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        currentUserID = profile.getId();
         if (profile != null) {
-            ((TextView) findViewById(R.id.main_username)).setText(profile.getName());
-            ((ProfilePictureView) findViewById((R.id.main_userpicture))).setProfileId(profile.getId());
-
+            ((TextView) findViewById(R.id.main_username)).setText(profile.getName()); // Display profile name
+            ((ProfilePictureView) findViewById((R.id.main_userpicture))).setProfileId(profile.getId()); // Display profile pic
+            displayUserCraving(); // Display user craving
             // Send request for user's friends list
             // First check if have user_friends permission
             permissions = accessToken.getPermissions();
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (isOnline()) {
                                         requestFeedData(id_url);
                                     } else {
-                                        //Toast.makeText(this, "Non-Facebook Network isn't working!", Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(this, "Non-Facebook Network isn't working!", Toast.LENGTH_LONG).show();
                                         Log.d("database-status","not connecting");
                                     }
                                 } catch (JSONException e) {
@@ -103,10 +105,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Get current craving for user
+    public void displayUserCraving() {
+        class CurrentCravingTask extends AsyncTask<String, String, String> {
+
+            @Override
+            // Get JSON data on this thread
+            protected String doInBackground(String... params) {
+                String craving = HttpManager.getData(params[0]);
+                Log.d("user current craving",craving);
+                return craving;
+            }
+
+            @Override
+            // Receives and displays profile's current craving and time
+            protected void onPostExecute(String result) {
+                List<Friend> userInfo = FeedJSONParser.parseFeed(result);
+                String craving = userInfo.get(0).getCurrentCraving();
+                craving = craving.substring(0,1).toUpperCase() + craving.substring(1);
+                ((TextView) findViewById(R.id.main_usercraving)).setText(craving);
+                ((TextView) findViewById(R.id.main_usercraving_time)).setText(userInfo.get(0).getCravingTimestamp());
+            }
+        }
+
+        CurrentCravingTask c = new CurrentCravingTask();
+        c.execute("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo&ids=" + currentUserID);
+    }
+
     // Open up new activity to search activity
     public void searchCraving(View v) {
-        Intent i = new Intent(MainActivity.this, SearchCravingActivity.class);
+        Intent i = new Intent(this, SearchCravingActivity.class);
         i.putExtra("CurrentCraving", R.string.craving);
+        i.putExtra("CurrentUserID", currentUserID);
         startActivity(i);
     }
 

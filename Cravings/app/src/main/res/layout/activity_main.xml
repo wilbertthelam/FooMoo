@@ -44,7 +44,7 @@
                 android:layout_toRightOf="@id/main_usercraving"
                 android:layout_alignBaseline="@id/main_usercraving"
                 android:textStyle="italic"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:text="(1 hour ago)"
                 android:id="@+id/main_usercraving_time" />
         </RelativeLayout>

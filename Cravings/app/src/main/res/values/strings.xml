@@ -3,13 +3,12 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">FooMoo</string>
 
     <string name="facebook_app_id">497829047061470</string>
     <string name="title_activity_search_craving"></string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="craving">Craving: Pizza</string>
+    <string name="craving"></string>
 
     <string name="search_hint">Search your Craving</string>
     <string name="menu_search">search_craving_menu</string>

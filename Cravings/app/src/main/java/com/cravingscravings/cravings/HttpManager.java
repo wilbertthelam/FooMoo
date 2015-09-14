@@ -1,10 +1,19 @@
 package com.cravingscravings.cravings;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -14,6 +23,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class HttpManager {
 
+    // Get data given REST URL
     public static String getData(String uri) {
 
         BufferedReader reader = null;
@@ -43,7 +53,27 @@ public class HttpManager {
                 }
             }
         }
-
-
     }
+
+    // Update a field in a record given REST URL
+    public static boolean updateField(String uri, String j) {
+        try {
+            URL url = new URL(uri);
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setRequestMethod("PUT");
+
+            OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+            out.write(j);
+            out.close();
+            con.getInputStream();
+
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
