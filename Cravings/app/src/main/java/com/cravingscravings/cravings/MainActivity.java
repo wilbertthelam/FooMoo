@@ -69,17 +69,20 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else {
                                 try {
-                                    List<Friend> friends = new ArrayList<Friend>();
+                                    String id_url = "https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo&ids=";
                                     for (int i = 0; i < result.length(); i++) {
-                                        Friend friend = new Friend();
                                         JSONObject obj = result.getJSONObject(i);
-                                        friend.setUserId(obj.getString("id"));
-                                        String[] name = obj.getString("name").split(" ");
-                                        friend.setFname(name[0]);
-                                        friend.setLname(name[1]);
-                                        friends.add(friend);
+                                        id_url += obj.getString("id") + ",";
                                     }
-                                    generateFeed(friends);
+
+                                    // Get other info from database corresponding to the Facebook id
+                                    Log.d("id_url", id_url);
+                                    if (isOnline()) {
+                                        requestFeedData(id_url);
+                                    } else {
+                                        //Toast.makeText(this, "Non-Facebook Network isn't working!", Toast.LENGTH_LONG).show();
+                                        Log.d("database-status","not connecting");
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -90,12 +93,7 @@ public class MainActivity extends AppCompatActivity {
             request.executeAsync();
 
             /*
-            // Create list view and populate it with data
-            if (isOnline()) {
-                requestFeedData("https://dsp-wilbertthelam-53861.cloud.dreamfactory.com/rest/foomoo_db/users?app_name=foomoo");
-            } else {
-                Toast.makeText(this, "Network isn't working!", Toast.LENGTH_LONG).show();
-            } */
+             */
         }
         // If cannot get current profile, return to login page
         else {
@@ -173,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         // Get JSON data on this thread
         protected String doInBackground(String... params) {
             String content = HttpManager.getData(params[0]);
+            Log.d("asdf",content);
             return content;
         }
 
@@ -183,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
             displayText("POST-Executing - " + result);
 
             List<Friend> friendList = FeedJSONParser.parseFeed(result);
+            Log.d("x",friendList.get(0).getCurrentCraving());
             generateFeed(friendList);
         }
     }
