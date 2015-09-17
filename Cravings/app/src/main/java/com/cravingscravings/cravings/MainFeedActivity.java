@@ -99,6 +99,7 @@ public class MainFeedActivity extends AppCompatActivity {
 
     // Create new user in database
     private void createNewUser() {
+        // Create JSON to POST
         JSONObject j = new JSONObject();
         try {
             j.put("user_id", currentUserId); // Set current user_id
@@ -134,6 +135,8 @@ public class MainFeedActivity extends AppCompatActivity {
             // Also includes log info
             protected void onPostExecute(String result) {
                 Log.d("POST-Executing", result.toString());
+                // If post success, go to main feed
+                // Else logout
                 if (result.equals("success")) {
                     ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
                     Log.d("NEW USER STATUS", "SUCCESSFUL");

@@ -7,25 +7,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFC107">
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
             android:orientation="vertical" >
             <com.facebook.login.widget.ProfilePictureView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
                 android:id="@+id/main_userpicture" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:id="@+id/main_username" />
+            <!--<TextView-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:id="@+id/main_username"-->
+                <!--android:textColor="#FFFFFF"/>-->
         </LinearLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -37,14 +39,15 @@
                 android:layout_marginRight="5dp"
                 android:textSize="22dp"
                 android:text="@string/craving"
-                android:textColor="#E8EAF6"
-                android:background="#3F51B5"
-                android:padding="10dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
+                android:textColor="#FFFFFF"
+
+                android:padding="12dp"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
                 android:clickable="true"
                 android:onClick="searchCraving"
-                android:id="@+id/main_usercraving" />
+                android:id="@+id/main_usercraving"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +55,8 @@
                 android:layout_alignBaseline="@id/main_usercraving"
                 android:textStyle="italic"
                 android:textSize="10dp"
-                android:text="(1 hour ago)"
+                android:text=""
+                android:textColor="#FFFFFF"
                 android:id="@+id/main_usercraving_time" />
         </RelativeLayout>
 
@@ -63,5 +67,5 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/main_peopleprofile_list"
-        android:scrollbars="none"></ListView>
+        android:scrollbars="vertical"></ListView>
 </LinearLayout>

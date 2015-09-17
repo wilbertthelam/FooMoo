@@ -2,6 +2,8 @@ package com.cravingscravings.cravings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,8 +57,9 @@ public class MainFeedActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_feed, container, false);
         setHasOptionsMenu(true);
-        ((TextView) v.findViewById(R.id.main_username)).setText(profile.getName()); // Display profile name
+        //((TextView) v.findViewById(R.id.main_username)).setText(profile.getName()); // Display profile name
         ((ProfilePictureView) v.findViewById((R.id.main_userpicture))).setProfileId(profile.getId()); // Display profile pic
+
         displayUserCraving(); // Display user craving
         displayFeed(); // Display friend feed
         return v;
