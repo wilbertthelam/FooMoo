@@ -46,7 +46,7 @@ public class LoginFacebookFragment extends Fragment {
                 // Make sure that user is logging in and not logging out
                 if (profile == null && profile2 != null) {
                     mProfileTracker.stopTracking();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), MainFeedActivity.class);
                     getActivity().finish();
                     startActivity(intent);
                 }

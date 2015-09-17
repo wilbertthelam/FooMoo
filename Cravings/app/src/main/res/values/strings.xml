@@ -13,4 +13,9 @@
     <string name="search_hint">Search your Craving</string>
     <string name="menu_search">search_craving_menu</string>
     <string name="title_activity_craving_searchable">CravingSearchable</string>
+    <string name="title_activity_main_feed">FooMoo</string>
+    <string name="hello_world">Hello world!</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

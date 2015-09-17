@@ -34,16 +34,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".MainFeedActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
             android:name=".SearchCravingActivity"
             android:label="@string/title_activity_search_craving"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainFeedActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cravingscravings.cravings.MainActivity" />
+                android:value="com.cravingscravings.cravings.MainFeedActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -54,8 +54,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                    android:resource="@xml/searchable" />
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 

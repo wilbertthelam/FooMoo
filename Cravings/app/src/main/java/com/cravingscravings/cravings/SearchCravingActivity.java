@@ -49,15 +49,15 @@ public class SearchCravingActivity extends AppCompatActivity {
         // Listener for submit button in search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            // Sets craving on database and brings user back to MainActivity
+            // Sets craving on database and brings user back to MainFeedActivity
             public boolean onQueryTextSubmit(String query) {
                 Log.d("submit-register", query);
 
                 // Take craving from search bar and send it to database
                 updateCraving(query);
 
-                // Return to MainActivity
-                Intent i = new Intent(SearchCravingActivity.this, MainActivity.class);
+                // Return to MainFeedActivity
+                Intent i = new Intent(SearchCravingActivity.this, MainFeedActivity.class);
                 startActivity(i);
                 return true;
             }
