@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -43,6 +44,7 @@ public class MainFeedActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         currentUserId = getArguments().getString("currentUserId");
         profile = Profile.getCurrentProfile();
         accessToken = AccessToken.getCurrentAccessToken();
@@ -72,7 +74,8 @@ public class MainFeedActivityFragment extends Fragment {
 
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings_main) {
-            return true;
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
@@ -134,7 +137,8 @@ public class MainFeedActivityFragment extends Fragment {
             @Override
             // Get JSON data on this thread
             protected String doInBackground(String... params) {
-                String craving = HttpManager.getData(params[0]);
+                HttpManager http = new HttpManager();
+                String craving = http.getData(params[0]);
                 Log.d("user current craving",craving);
                 return craving;
             }
@@ -175,8 +179,13 @@ public class MainFeedActivityFragment extends Fragment {
             @Override
             // Get JSON data on this thread
             protected String doInBackground(String... params) {
-                String content = HttpManager.getData(params[0]);
-                Log.d("asdf",content);
+                HttpManager http = new HttpManager();
+                String content = http.getData(params[0]);
+                if (content == null) {
+                    Log.d("SYSTEM","FAIL");
+                }
+
+                //Log.d("asdf",content);
                 return content;
             }
 
@@ -184,11 +193,13 @@ public class MainFeedActivityFragment extends Fragment {
             // After the AsyncTask is called, moves feed data to UI thread.
             // Also includes log info
             protected void onPostExecute(String result) {
-                Log.d("POST-Executing", result);
-
-                List<Friend> friendList = FeedJSONParser.parseFeed(result);
-                Log.d("x",friendList.get(0).getCurrentCraving());
-                generateFeed(friendList);
+                if (result == null) {
+                  //INSERT BLANK PLACEHOLDER
+                } else {
+                    List<Friend> friendList = FeedJSONParser.parseFeed(result);
+                    Log.d("x", friendList.get(0).getCurrentCraving());
+                    generateFeed(friendList);
+                }
             }
         }
 

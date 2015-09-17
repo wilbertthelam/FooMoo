@@ -110,7 +110,8 @@ public class SearchCravingActivity extends AppCompatActivity {
         @Override
         // Put JSON data for craving update on this thread
         protected Integer doInBackground(String... params) {
-            boolean success = HttpManager.updateField(params[0], params[1]);
+            HttpManager http = new HttpManager();
+            boolean success = http.updateField(params[0], params[1]);
             Log.d("finished_background","indeed");
             if (success) return 1;
             return 0;

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -24,7 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpManager {
 
     // Get data given REST URL
-    public static String getData(String uri) {
+    public String getData(String uri) {
 
         BufferedReader reader = null;
         try {
@@ -56,7 +57,7 @@ public class HttpManager {
     }
 
     // Update a field in a record given REST URL
-    public static boolean updateField(String uri, String j) {
+    public boolean updateField(String uri, String j) {
         try {
             URL url = new URL(uri);
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
@@ -72,6 +73,39 @@ public class HttpManager {
         } catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // Add a new user
+    public String addUser(String uri, String j) {
+        try {
+            URL url = new URL(uri);
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setRequestMethod("POST");
+
+            OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+            out.write(j);
+            out.flush();
+            out.close();
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            Log.d("AddUserReponse",response.toString());
+            in.close();
+
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
         }
     }
 
