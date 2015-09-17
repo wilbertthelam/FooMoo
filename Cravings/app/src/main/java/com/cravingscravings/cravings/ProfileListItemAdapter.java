@@ -67,7 +67,7 @@ public class ProfileListItemAdapter extends ArrayAdapter<Friend> {
 
         // Sets view for each individual
         viewHolder.picture.setProfileId(userId);
-        viewHolder.name.setText(fname + " "  + lname + " (" + userId + ")");
+        viewHolder.name.setText(fname + " "  + lname); // + " (" + userId + ")");
         viewHolder.food.setText(currentCraving);
         viewHolder.time.setText("(" + craving_timestamp + ")");
 
