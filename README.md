@@ -3,7 +3,7 @@ Created by Linsen, Jane, Wilbert 2015
 
 Android application to provide an easier time to find friends with similar food interests.
 
-TEST ACCOUNTS WITH LOTS OF PREBUILT DATA:
+TEST ACCOUNTS WITH LOTS OF PREBUILT DATA: <br>
 login into app with:
 email: troy_qkajhkt_barnes@tfbnw.net
 password: troybarnes
