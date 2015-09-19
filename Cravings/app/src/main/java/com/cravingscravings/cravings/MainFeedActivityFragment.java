@@ -32,12 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment containing the Main View with friends
  */
 public class MainFeedActivityFragment extends Fragment {
     String currentUserId; // Current user ID

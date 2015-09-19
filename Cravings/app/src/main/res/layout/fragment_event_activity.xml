@@ -1,10 +1,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.cravingscravings.cravings.EventActivityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFC107"
+        android:elevation="4dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="12dp"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/event_picture"
+                android:gravity="center"
+                android:textSize="28dp"
+                android:textColor="#FFFFFF"
+                android:text="@string/event_plus_sign"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:textSize="22dp"
+                android:text="@string/add_event"
+                android:textColor="#FFFFFF"
 
+                android:padding="12dp"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                android:id="@+id/hosted_event"
+                />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toRightOf="@id/hosted_event"-->
+                <!--android:layout_alignBaseline="@id/hosted_event"-->
+                <!--android:textStyle="italic"-->
+                <!--android:textSize="10dp"-->
+                <!--android:text=""-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--android:id="@+id/main_usercraving_time" />-->
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/event_listitem_view"
+        android:scrollbars="vertical"></ListView>
 </LinearLayout>

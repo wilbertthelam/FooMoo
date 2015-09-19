@@ -56,6 +56,37 @@ public class HttpManager {
         }
     }
 
+    public String getData2(String uri) {
+
+        BufferedReader reader = null;
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            StringBuilder sb = new StringBuilder();
+            reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+
+            }
+            return sb.toString();
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }
+    }
+
     // Update a field in a record given REST URL
     public boolean updateField(String uri, String j) {
         try {
