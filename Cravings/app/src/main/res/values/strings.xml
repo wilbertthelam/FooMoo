@@ -20,4 +20,10 @@
     <!-- Events List -->
     <string name="add_event">Create an Event</string>
     <string name="event_plus_sign">+</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="event_blank">BLANK EVENT FRAGMENT</string>
+    <string name="title_activity_event_activitiy">EventActivitiy</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

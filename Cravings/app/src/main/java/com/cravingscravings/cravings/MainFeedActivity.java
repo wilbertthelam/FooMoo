@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 /** MAIN FEED FRAGMENT */
@@ -171,7 +169,7 @@ public class MainFeedActivity extends AppCompatActivity {
         public Fragment getItem(int pos) {
             switch(pos) {
                 case 0: return MainFeedActivityFragment.newInstance(currentUserId);
-                case 1: return EventActivityFragment.newInstance(currentUserId);
+                case 1: return EventsListFragment.newInstance(currentUserId);
                 default: return MainFeedActivityFragment.newInstance(currentUserId);
             }
         }
@@ -182,7 +180,6 @@ public class MainFeedActivity extends AppCompatActivity {
             return 2;
         }
     }
-
 
     // Open up new activity to search activity
     public void searchCraving(View v) {
