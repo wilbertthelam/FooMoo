@@ -25,7 +25,7 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,38 +34,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainFeedActivity"
+            android:name=".activities.MainDisplayActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".SearchCravingActivity"
+            android:name=".activities.SearchCravingActivity"
             android:label="@string/title_activity_search_craving"
-            android:parentActivityName=".MainFeedActivity" >
+            android:parentActivityName=".activities.MainDisplayActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cravingscravings.cravings.MainFeedActivity" />
+                android:value=".activities.MainDisplayActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".CravingSearchable"
-            android:label="@string/title_activity_craving_searchable" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-        <activity
-            android:name=".EventActivity"
+            android:name=".activities.EventActivity"
             android:label="@string/title_activity_event_activitiy"
-            android:parentActivityName=".MainFeedActivity" >
+            android:parentActivityName=".activities.MainDisplayActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cravingscravings.cravings.MainFeedActivity" />
+                android:value=".activities.MainDisplayActivity" />
         </activity>
     </application>
 
