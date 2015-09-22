@@ -61,7 +61,7 @@ public class EventListFragment extends Fragment {
             protected String doInBackground(String... params) {
                 HttpManager http = new HttpManager();
                 Log.d("tye1", params[0]);
-                String content = http.getData2(params[0]);
+                String content = http.getDataHttp(params[0]);
                 //Log.d("tye",content);
                 if (content == null) {
                     Log.d("MYSQL Database", "DOWN");

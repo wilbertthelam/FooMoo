@@ -56,7 +56,7 @@ public class HttpManager {
         }
     }
 
-    public String getData2(String uri) {
+    public String getDataHttp(String uri) {
 
         BufferedReader reader = null;
         try {

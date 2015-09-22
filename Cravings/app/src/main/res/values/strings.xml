@@ -21,9 +21,13 @@
     <string name="add_event">Create an Event</string>
     <string name="event_plus_sign">+</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="event_blank">BLANK EVENT FRAGMENT</string>
+    <!-- Events Home -->
+    <string name="event_home_event_craving"></string>
+    <string name="event_home_user_craving"></string>
     <string name="title_activity_event_activitiy">EventActivitiy</string>
+    <string name="event_home_change_craving_button">change</string>
+    <string name="event_home_time">Time</string>
+    <string name="event_home_location">Location</string>
 
     <string name="hello_world">Hello world!</string>
 </resources>

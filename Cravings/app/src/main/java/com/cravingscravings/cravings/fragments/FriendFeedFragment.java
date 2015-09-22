@@ -55,7 +55,7 @@ public class FriendFeedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_main_feed, container, false);
+        View v = inflater.inflate(R.layout.fragment_friend_feed, container, false);
         setHasOptionsMenu(true);
         //((TextView) v.findViewById(R.id.main_username)).setText(profile.getName()); // Display profile name
         ((ProfilePictureView) v.findViewById((R.id.main_userpicture))).setProfileId(profile.getId()); // Display profile pic
