@@ -119,7 +119,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 			}  else {
 				res.json({"Error": false, "Message" : "Success", "Results" : rows});
 			}
-		})
+		});
 	});
 
 

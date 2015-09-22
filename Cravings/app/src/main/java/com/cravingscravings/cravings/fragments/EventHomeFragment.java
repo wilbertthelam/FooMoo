@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cravingscravings.cravings.adapters.CravingVoteListAdapter;
+import com.cravingscravings.cravings.adapters.EventListItemAdapter;
 import com.cravingscravings.cravings.objects.EventCraving;
 import com.cravingscravings.cravings.objects.UserCraving;
 import com.cravingscravings.cravings.parsers.EventCravingJSONParser;
@@ -90,7 +93,6 @@ public class EventHomeFragment extends Fragment {
     private void generateEventData(Event event) {
         ((TextView) getView().findViewById(R.id.event_home_location)).setText(event.getLocation());
         ((TextView) getView().findViewById(R.id.event_home_time)).setText(event.getTime());
-        ((TextView) getView().findViewById(R.id.event_home_event_craving)).setText("Craving");
         ((EventActivity) getActivity()).setActionBarTitle(event.getEventName());
     }
 
@@ -128,13 +130,12 @@ public class EventHomeFragment extends Fragment {
 
     // Attach event craving to UI
     private void generateEventCraving(List<EventCraving> event) {
-        EventCraving e = event.get(0);
-        ((TextView) getView().findViewById(R.id.event_home_event_craving)).setText(e.getCraving());
-        String stringBuilder = "";
-        for (EventCraving f: event) {
-            stringBuilder += f.getCraving() + " (" + f.getVotes() + " votes)" + "\r\n";
-        }
-        ((TextView) getView().findViewById(R.id.event_home_craving_listing)).setText(stringBuilder);
+        EventCraving first = event.get(0);
+        ((TextView) getView().findViewById(R.id.event_home_event_craving)).setText(first.getCraving() + " (" + first.getVotes() + ")");
+        event.remove(0);
+        CravingVoteListAdapter eventAdapter = new CravingVoteListAdapter(getActivity(), event);
+        ListView view = (ListView) getView().findViewById(R.id.craving_vote_list_view);
+        view.setAdapter(eventAdapter);
     }
 
     public void displayUserCravings() {
@@ -171,8 +172,8 @@ public class EventHomeFragment extends Fragment {
 
     // Attach event craving to UI
     private void generateUserCraving(List<UserCraving> user) {
-        String userCraving = user.get(0).getUserCraving();
-        ((TextView) getView().findViewById(R.id.event_home_user_craving)).setText(userCraving);
+        //String userCraving = user.get(0).getUserCraving();
+        //((TextView) getView().findViewById(R.id.event_home_user_craving)).setText(userCraving);
     }
 
     // Event Fragment instantiater
